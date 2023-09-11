@@ -47,7 +47,8 @@ class BuiltWithParser:
 
 
 def builtwith_pars(link):
-    parser = BuiltWithParser('rezka.ag')
+    # add domain not link
+    parser = BuiltWithParser(link)
     lst = parser.get_page_records()
 
     fast_check_list = fast_check_all(link)
@@ -63,14 +64,17 @@ def builtwith_pars(link):
 
 
 if __name__ == '__main__':
-    # parser = BuiltWithParser('rezka.ag')
-    # print(parser.get_page_records())
-    #
+
+    parser = BuiltWithParser('rezka.ag')
+    print(parser.get_page_records())
+
 
     link = "https://rozetka.com.ua/ua/search/?seller=rozetka&text=iPhone+14+Pro+Max"
 
-    print(fast_check_all(link))
+    fast_check_list = fast_check_all(link)
 
-    # lst = check_links_for_rel_attribute('https://rozetka.com.ua/ua/search/?seller=rozetka&text=iPhone+14+Pro+Max')
-    #
-    # print(lst)
+    caching_test_list = caching_test(link)
+
+    nested_tables_list = nested_tables_test(link)
+
+    adstxt_list = adstxt_validation_test(link)
