@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+
+        <div class="div-search">
+            <form class="form-search" method="post" action="{% url 'search_link' %}">
+                {% csrf_token %}
+                <input class="input-search" id="link" name="link" type="text" placeholder="Enter URL">
+                <button class="button-search" type="submit" onclick="showLoading()">Search</button>
+            </form>
+        </div>
+
+    </div>
+
+        <div id="loading" style="display: none; padding: 100px; text-align: center">
+            <h2>Loading...</h2>
+        </div>
+
+        {% if pars == True %}
+
+            <div class="container">
+                <h1>Search Results</h1>
+
+                <h2>CSS Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in css_links %}
+                            <tr>
+                                <td class="td_tab_2_cols">
+                                {% if forloop.last %}
+                                        {{ link.0 }}
+                                    {% else %}
+                                        <a href="{{ link.0 }}">{{ link.0 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>JS Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in js_links %}
+                            <tr>
+                                <td class="td_tab_2_cols">
+                                    {% if forloop.last %}
+                                        {{ link.0 }}
+                                    {% else %}
+                                        <a href="{{ link.0 }}">{{ link.0 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>Image Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in image_links %}
+                            <tr>
+                                <td class="td_tab_2_cols">
+                                {% if forloop.last %}
+                                        {{ link.0 }}
+                                    {% else %}
+                                        <a href="{{ link.0 }}">{{ link.0 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+                <h2>Internal Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in internal_links %}
+                            <tr>
+                                <td class="td_tab_2_cols"><a href="{{ link.0 }}">{{ link.0 }}</a></td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>External Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in external_links %}
+                            <tr>
+                                <td class="td_tab_2_cols"><a href="{{ link.0 }}">{{ link.0 }}</a></td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>Video Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in video_links %}
+                            <tr>
+                                <td class="td_tab_2_cols">
+                                {% if forloop.last %}
+                                        {{ link.0 }}
+                                    {% else %}
+                                        <a href="{{ link.0 }}">{{ link.0 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2>File Links:</h2>
+                <table class="tab_cols">
+                    <thead>
+                        <tr>
+                            <th class="th_tab_2_cols">Link</th>
+                            <th class="th_tab_2_cols">Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for link in file_links %}
+                            <tr>
+                                <td class="td_tab_2_cols">
+                                {% if forloop.last %}
+                                        {{ link.0 }}
+                                    {% else %}
+                                        <a href="{{ link.0 }}">{{ link.0 }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="td_tab_2_cols">{{ link.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+</html>
+
+

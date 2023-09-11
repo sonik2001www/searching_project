@@ -1,0 +1,59 @@
+<nav class="nav">
+    <a class="nav-a {% if request.resolver_match.url_name == 'search_link' %}active{% endif %}" href="{% url 'search_link' %}">Search link</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'get_pagespeed_info' %}active{% endif %}" href="{% url 'get_pagespeed_info' %}">Get pagespeed info</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'text_analiz' %}active{% endif %}" href="{% url 'text_analiz' %}">Text analiz</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'general' %}active{% endif %}" href="{% url 'general' %}">General</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'micro' %}active{% endif %}" href="{% url 'micro' %}">Micro</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'html_validate' %}active{% endif %}" href="{% url 'html_validate' %}">Html validate</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'robots' %}active{% endif %}" href="{% url 'robots' %}">Robots</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'sitemap' %}active{% endif %}" href="{% url 'sitemap' %}">Sitemap</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'canonical' %}active{% endif %}" href="{% url 'canonical' %}">Canonical</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'images' %}active{% endif %}" href="{% url 'images' %}">Images</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Index</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'main' %}active{% endif %}" href="{% url 'main' %}">Main</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'mobile' %}active{% endif %}" href="{% url 'mobile' %}">Mobile</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'redirects' %}active{% endif %}" href="{% url 'redirects' %}">Redirects</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'social' %}active{% endif %}" href="{% url 'social' %}">Social</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'tags' %}active{% endif %}" href="{% url 'tags' %}">Tags</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'whois' %}active{% endif %}" href="{% url 'whois' %}">Whois</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'responsive_page' %}active{% endif %}" href="{% url 'responsive_page' %}">Responsive</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'builtwith' %}active{% endif %}" href="{% url 'builtwith' %}">Builtwith</a>
+    <a class="nav-a {% if request.resolver_match.url_name == 'keyword' %}active{% endif %}" href="{% url 'keyword' %}">Keyword</a>
+</nav>
+
+<style>
+    /* Стилі для навігаційного бару */
+    .nav {
+      display: flex;
+      justify-content: center;
+      background-color: #f1f1f1;
+      padding: 10px;
+      background: white;
+      flex-wrap: wrap; /* Додаємо новий стиль flex-wrap для перенесення пунктів на нову лінійку */
+    }
+
+    .nav-a {
+      text-decoration: none;
+      color: #333;
+      margin: 0 10px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      white-space: nowrap; /* Забороняємо перенос тексту на новий рядок */
+    }
+
+    .nav-a:hover {
+      background-color: #ddd;
+    }
+
+    .nav-a.active {
+      background-color: #ddd;
+    }
+
+    /* Медіа-запит для малих екранів */
+    @media (max-width: 600px) {
+      .nav-a {
+        margin-bottom: 5px; /* Додаємо зовнішній відступ між пунктами на малих екранах */
+      }
+    }
+</style>
+

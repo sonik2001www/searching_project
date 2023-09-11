@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="div-search">
+            <form class="form-search" method="post" action="{% url 'general' %}">
+                {% csrf_token %}
+                <input class="input-search" id="link" name="link" type="text" placeholder="Enter URL">
+                <button class="button-search" type="submit" onclick="showLoading()">Search</button>
+            </form>
+        </div>
+    </div>
+
+        <div id="loading" style="display: none; padding: 100px; text-align: center">
+            <h2>Loading...</h2>
+        </div>
+
+        {% if pars == True %}
+            <div class="container">
+
+                <div style="padding: 30px;">
+                    <table class="tab_cols">
+                         <thead>
+                            <tr>
+                                <th class="th_tab_2_cols">Tag</th>
+                                <th class="th_tab_2_cols">Text</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i_lst in lst %}
+                            <tr>
+                                <td class="td_tab_2_cols">{{ i_lst.0 }}</td>
+                                <td class="td_tab_2_cols">{{ i_lst.1 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="padding: 30px;">
+                    <table class="tab_cols">
+                         <thead>
+                            <tr>
+                                <th class="th_tab_3_col1_2">Tag</th>
+                                <th class="th_tab_3_col1_2">Text</th>
+                                <th class="th_tab_3_col3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i_lst in lst_status %}
+                            <tr>
+                                <td class="td_tab_3_col1_2">{{ i_lst.0 }}</td>
+                                <td class="td_tab_3_col1_2">{{ i_lst.1.text }}</td>
+                                <td class="td_tab_3_col3 {{ i_lst.1.class }}">{{ i_lst.1.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+</html>

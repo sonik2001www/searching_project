@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* style.css */
+
+        /* Стилі для чорного квадрата навколо фрейму */
+        .black-square {
+          margin-top: 20px;
+          display: flex;
+          justify-content: center; /* Вирівнювання фрейму по центру горизонтально */
+          align-items: center; /* Вирівнювання фрейму по центру вертикально */
+        }
+
+        /* Стилі для контейнера фрейму */
+        .iframe-container {
+          border: 5px solid black; /* Рамка навколо фрейму */
+          max-width: 100%;
+        }
+
+        /* Стилі для самого фрейму */
+        #iframe {
+          display: block;
+          border: none;
+        }
+
+        /* Збільшення контейнера фрейму до внутрішніх розмірів фрейму */
+        #iframe-container iframe {
+          width: 100%;
+          height: 100%;
+        }
+
+
+    </style>
+    <script>
+      // Функція для встановлення рядка User-Agent на сторінці в iframe
+      function setMobileUserAgent() {
+        var iframe = document.getElementById('frame');
+        if (iframe) {
+          iframe.contentWindow.navigator.userAgent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25';
+        }
+      }
+
+      // Функція для збереження URL у локальне сховище
+      function saveURL() {
+        var urlInput = document.getElementById('urlInput');
+        var url = urlInput.value;
+        localStorage.setItem('savedURL', url);
+      }
+
+      // Функція для отримання збереженого URL з локального сховища
+      function getSavedURL() {
+        var savedURL = localStorage.getItem('savedURL');
+        var urlInput = document.getElementById('urlInput');
+        if (savedURL) {
+          urlInput.value = savedURL;
+        }
+      }
+    </script>
+</head>
+<body onload="setMobileUserAgent(); getSavedURL();">
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="div-search">
+            <form class="form-search" method="post" action="{% url 'responsive_page' %}">
+                {% csrf_token %}
+                <input class="input-search" type="text" id="urlInput" name="url" placeholder="Введіть URL" required>
+                <select class="input-search" style="width: auto" id="select" name="select" tabindex="-1" aria-hidden="true">
+                    <option value="iPhone_se">iPhone SE</option>
+                    <option value="iPhone_xr">iPhone XR</option>
+                    <option value="iPhone_12_pro">iPhone 12 Pro</option>
+                    <option value="Pixel_5">Pixel 5</option>
+                    <option value="Samsung_Galaxy_S8_plus">Samsung Galaxy S8+</option>
+                    <option value="Samsung_Galaxy_S20_Ultra">Samsung Galaxy S20 Ultra</option>
+                    <option value="iPad_Air">iPad Air</option>
+                    <option value="iPad_Mini">iPad Mini</option>
+                    <option value="Surface_Pro_7">Surface Pro 7</option>
+                    <option value="Surface_Duo">Surface Duo</option>
+                    <option value="Galaxy_Fold">Galaxy Fold</option>
+                    <option value="Samsung_Galaxy_A51_71">Samsung Galaxy A51/71</option>
+                    <option value="Nest_Hub">Nest Hub</option>
+                    <option value="Nest_Hub_Max">Nest Hub Max</option>
+                    <option value="Facebook_for_Android_v407_on_Pixel_6">Facebook for Android v407 on Pixel 6</option>
+                </select>
+                <button class="button-search" type="submit">Go</button>
+            </form>
+        </div>
+    </div>
+
+    {% if pars == True %}
+        <div class="container">
+            <!-- Чорний квадрат -->
+            <div class="black-square">
+                <div class="iframe-container" style="height: {{ height }}px; width: {{ width }}px; padding: 10px;">
+                    <iframe id="frame" src="{{ url }}" class="frame" height="100%" width="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+</html>

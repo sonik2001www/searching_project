@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+
+        <div class="div-search">
+            <form class="form-search" method="post" action="{% url 'html_validate' %}">
+                {% csrf_token %}
+                <input class="input-search" id="link" name="link" type="text" placeholder="Enter URL">
+                <button class="button-search" type="submit" onclick="showLoading()">Search</button>
+            </form>
+        </div>
+
+    </div>
+
+        <div id="loading" style="display: none; padding: 100px; text-align: center">
+            <h2>Loading...</h2>
+        </div>
+
+        {% if pars == True %}
+
+            <div class="container">
+
+                <div style="padding: 30px;">
+                    <table class="tab_cols">
+                         <thead>
+                            <tr>
+                                <th class="th_tab_7">Status</th>
+                                <th class="th_tab_7">Message</th>
+                                <th class="th_tab_7">Extract</th>
+                                <th class="th_tab_7">From 1 line</th>
+                                <th class="th_tab_7">From 1 col</th>
+                                <th class="th_tab_7">To last line</th>
+                                <th class="th_tab_7">To last col</th>
+                            </tr>
+                        </thead>
+                        {% for i_lst in lst %}
+                            <tbody>
+                                <tr>
+                                    {% if i_lst.type == 'Error' %}
+                                        <td class="td_tab_7 {{ i_lst.type }}">{{ i_lst.type }}</td>
+                                    {% elif i_lst.type == 'Warning' %}
+                                        <td class="td_tab_7 {{ i_lst.type }}">{{ i_lst.type }}</td>
+                                    {% else %}
+                                        <td class="td_tab_7">{{ i_lst.type }}</td>
+                                    {% endif %}
+                                    <td class="td_tab_7">{{ i_lst.message }}</td>
+                                    <td class="td_tab_7">{{ i_lst.extract }}</td>
+                                    <td class="td_tab_7">{{ i_lst.loc_from_1_line }}</td>
+                                    <td class="td_tab_7">{{ i_lst.loc_from_1_col }}</td>
+                                    <td class="td_tab_7">{{ i_lst.loc_to_last_line }}</td>
+                                    <td class="td_tab_7">{{ i_lst.loc_to_last_col }}</td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+</html>
