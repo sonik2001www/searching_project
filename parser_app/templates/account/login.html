@@ -1,0 +1,50 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% load account socialaccount %}
+{% load static %}
+
+{% block content %}
+  <form class="login-form" method="POST" action="{% url 'account_login' %}">
+    <div class="login-h1">
+        Account Login
+    </div>
+    {% csrf_token %}
+    {{ form.non_field_errors | safe }}
+    <br>
+
+    <div class="wrap-input">
+        {{ form.login.errors | safe }}{{ form.login|attr:"class:input" }}
+        <label for="id_login">Username</label>
+    </div>
+
+    <div class="wrap-input">
+        {{ form.password.errors | safe }}{{ form.password|attr:"class:input" }}
+        <label for="id_password">Password</label>
+        <div class="show-password"></div>
+    </div>
+
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+
+
+    <div class="container-login-form-btn">
+        <button class="login-form-btn" type="submit">
+            Login
+        </button>
+    </div>
+
+    <div class="form-desc">
+        <a class="form-desc-link" href="{% url 'account_reset_password' %}">
+            Forgot Password?
+        </a>
+    </div>
+    <div class="form-desc">
+        Dont have an account?
+        <a class="form-desc-link" href="{{ signup_url }}">
+            Try creator for free
+        </a>
+    </div>
+  </form>
+
+{% endblock %}

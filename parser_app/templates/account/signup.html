@@ -1,0 +1,86 @@
+{% load static %}
+{% load widget_tweaks %}
+
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="{% static 'templates/css/style.css' %}" rel="stylesheet"/>
+    <title>Scale Fluencer</title>
+</head>
+
+<body style="padding: 0;" class="opacity-animation">
+
+<div class="container-login">
+    <div class="wrap-login">
+        <form class="login-form" id="signup_form" method="post" action="{% url 'account_signup' %}">
+
+            <div class="login-h1">
+                Account Sign Up
+            </div>
+            {% csrf_token %}
+            {{ form.non_field_errors | safe }}
+            {{ form.username.errors | safe }}
+
+            <div class="wrap-input">
+                {{ form.username | attr:"class:input" }}
+                <label for="id_username">Username</label>
+            </div>
+
+            <div class="wrap-input">
+                {{ form.first_name | attr:"class:input" }}
+                <label for="id_first_name">Name</label>
+            </div>
+
+            {{ form.email.errors | safe }}
+
+            <div class="wrap-input">
+                {{ form.email | attr:"class:input" }}
+                <label for="id_email">Email</label>
+            </div>
+
+            {{ form.password2.errors | safe }}
+            {{ form.password1.errors | safe }}
+
+            <div class="wrap-input">
+                {{ form.password1 | attr:"class:input" }}
+                <label for="id_password2">Confirm Password</label>
+                <div class="show-password"></div>
+            </div>
+
+            <div class="wrap-input">
+                {{ form.password2 | attr:"class:input" }}
+                <label for="id_password2">Confirm Password</label>
+                <div class="show-password"></div>
+            </div>
+
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <div class="container-login-form-btn">
+                <button class="login-form-btn">
+                    Login
+                </button>
+            </div>
+
+            <div class="form-desc">
+                Already have an account?
+                <a class="form-desc-link" href="{{ login_url }}">
+                    Sign in
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- Script -->
+<script src="{% static 'templates/js/index.js' %}"></script>
+</body>
+
+</html>

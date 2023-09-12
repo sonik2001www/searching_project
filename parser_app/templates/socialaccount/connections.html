@@ -1,0 +1,65 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Account Connections" %}{% endblock %}
+
+{% block content %}
+<div class="login-h1">
+    Account Connections
+</div>
+
+{% if form.accounts %}
+<div class="form-desc">
+    You currently have no social network accounts connected to this account.
+</div>
+
+<form method="post" action="{% url 'socialaccount_connections' %}">
+    {% csrf_token %}
+
+    <fieldset>
+        <div class="radio">
+            {% if form.non_field_errors %}
+            <div id="errorMsg">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            {% for base_account in form.accounts %}
+                {% with base_account.get_provider_account as account %}
+                    <div class="custom-radio__wrapper">
+                        <div class="custom-radio">
+
+                            <input id="id_account_{{ base_account.id }}" name="account" type="radio" value="{{ base_account.id }}">
+                            <label for="id_account_{{ base_account.id }}">{{ account }}</label>
+
+
+                            <span class="primary {{ base_account.provider }} {{ account.get_brand.id }}">{{account.get_brand.name}}</span>
+
+                        </div>
+                    </div>
+                {% endwith %}
+            {% endfor %}
+
+            <div class="custom-radio__btns">
+                <button class="custom-radio__btn" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+            </div>
+        </div>
+
+    </fieldset>
+
+</form>
+
+{% else %}
+<p>{% trans 'You currently have no social network accounts connected to this account.' %}</p>
+{% endif %}
+
+<div class="account__socials">
+    <div class="account__title">Add a 3rd Party Account</div>
+
+    <div class="account__social">
+        <a class="account__google" href="{% provider_login_url 'google' %}">log in with Google</a>
+    </div>
+</div>
+
+
+{% endblock %}

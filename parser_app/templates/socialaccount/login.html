@@ -1,0 +1,48 @@
+{% load static %}
+{% load widget_tweaks %}
+
+{% load account socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" href="{% static 'templates/css/style.css' %}" rel="stylesheet"/>
+    <title>Cale Fluncer</title>
+</head>
+
+<body style="padding: 0;" class="opacity-animation">
+
+    <div class="container-login">
+        <div class="wrap-login">
+            <div>
+
+                <div class="form-center">
+
+                    <div class="login-h1">
+                        Sign In Via Google
+                    </div>
+
+                    <div class="form-desc flex-1">
+                        You are about to sign in using a third party account from Google.
+                    </div>
+
+                    <form class="container-login-form-btn" method="post" action="{% provider_login_url 'google' %}">{% csrf_token %}
+                        <button class="login-form-btn" type="submit">
+                            Continue
+                        </button>
+                    </form>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="{% static 'templates/js/index.js' %}"></script>
+</body>
+
+</html>

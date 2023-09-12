@@ -1,0 +1,32 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load account %}
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'templates/css/style.css' %}">
+  <title>{% block head_title %}{% endblock %}</title>
+</head>
+<body style="padding: 0;" class="opacity-animation">
+
+  <div class="container-login">
+    <div class="wrap-login">
+
+      {% block content %}
+      {% endblock %}
+
+    </div>
+  </div>
+
+
+  <script src="{% static 'templates/js/index.js' %}"></script>
+  {% block extra_body %}
+  {% endblock %}
+</body>
+</html>
