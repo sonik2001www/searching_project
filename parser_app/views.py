@@ -1,5 +1,4 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 
 from parser_app.modules.url import E_URL
 
@@ -29,6 +28,10 @@ from .tasks import (
 
 def search_link(request):
     pars = False
+
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         # Запуск асинхронної задачі
@@ -46,6 +49,9 @@ def get_pagespeed_info(request):
     # видалити [-1][1] і вставляри розібрані стрічки
     st = [1,2.3,3]
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         # Запуск асинхронної задачі
@@ -111,6 +117,9 @@ def get_pagespeed_info(request):
 
 def text_analiz(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         # Запуск асинхронної задачі
@@ -123,6 +132,9 @@ def text_analiz(request):
 
 def general(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = general_pars_async.delay(link)
@@ -134,6 +146,9 @@ def general(request):
 
 def micro(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = micro_pars_async.delay(link)
@@ -145,6 +160,9 @@ def micro(request):
 
 def html_validate(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = html_validate_pars_async.delay(link)
@@ -160,6 +178,9 @@ def html_validate(request):
 
 def robots(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = robots_pars_async.delay(link)
@@ -171,6 +192,9 @@ def robots(request):
 
 def sitemap(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = sitemap_pars_async.delay(link)
@@ -182,6 +206,9 @@ def sitemap(request):
 
 def canonical(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = canonical_pars_async.delay(link)
@@ -193,6 +220,9 @@ def canonical(request):
 
 def images(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = images_pars_async.delay(link)
@@ -204,6 +234,9 @@ def images(request):
 
 def index(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = index_pars_async.delay(link)
@@ -215,6 +248,9 @@ def index(request):
 
 def main(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = main_pars_async.delay(link)
@@ -226,6 +262,9 @@ def main(request):
 
 def mobile(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = mobile_pars_async.delay(link)
@@ -237,6 +276,9 @@ def mobile(request):
 
 def redirects(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = redirects_pars_async.delay(link)
@@ -248,6 +290,9 @@ def redirects(request):
 
 def social(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = social_pars_async.delay(link)
@@ -259,6 +304,9 @@ def social(request):
 
 def tags(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = tags_pars_async.delay(link)
@@ -270,6 +318,9 @@ def tags(request):
 
 def whois(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = whois_pars_async.delay(link)
@@ -280,6 +331,9 @@ def whois(request):
 
 
 def responsive_page(request):
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == "POST":
 
         async_result = responsive_page_async.delay(request, E_URL)
@@ -294,6 +348,9 @@ def responsive_page(request):
 
 def builtwith(request):
     pars = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         link = request.POST.get('link')
         async_result = builtwith_pars_async.delay(link)
@@ -307,6 +364,9 @@ def builtwith(request):
 def keyword(request):
     pars = False
     problem = False
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
     if request.method == 'POST':
         text = request.POST.get('text')
 
