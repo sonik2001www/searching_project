@@ -6,6 +6,8 @@ from .seo_test.caching_test import caching_test
 from .seo_test.nested_tables_test import nested_tables_test
 from .seo_test.adstxt_validation_test import adstxt_validation_test
 
+from parser_app.modules.url import E_URL
+
 
 class BuiltWithParser:
     BASE_URL = 'https://builtwith.com/'
@@ -46,9 +48,32 @@ class BuiltWithParser:
         return output_list
 
 
+class Mobile(E_URL):
+
+    def __init__(self, url):
+        E = E_URL(url)
+        self.requests = E.get_requests()
+        self.source = self.requests.text
+        # self.domain = E.requests.domain
+        self.url = self.requests.url
+        self.domain = self.extract_domain(self.requests.url)
+
+    def extract_domain(self, url):
+        from urllib.parse import urlparse
+        parsed_url = urlparse(url)
+        return parsed_url.netloc
+
+
 def builtwith_pars(link):
+
+    E = Mobile(link)
+    link = E.url
+    domain = E.domain
+
+    print(link, domain)
+
     # add domain not link
-    parser = BuiltWithParser(link)
+    parser = BuiltWithParser(domain)
     lst = parser.get_page_records()
 
     fast_check_list = fast_check_all(link)
@@ -59,22 +84,28 @@ def builtwith_pars(link):
 
     adstxt_list = adstxt_validation_test(link)
 
-
     return lst, fast_check_list, caching_test_list, nested_tables_list, adstxt_list
 
 
 if __name__ == '__main__':
 
-    parser = BuiltWithParser('rezka.ag')
-    print(parser.get_page_records())
+    url = 'https://rozetka.com.ua/ua/search/?seller=rozetka&text=iPhone+14+Pro+Max'
 
+    E = E_URL(url)
+    url = E.requests.url
 
-    link = "https://rozetka.com.ua/ua/search/?seller=rozetka&text=iPhone+14+Pro+Max"
+    print(url)
 
-    fast_check_list = fast_check_all(link)
-
-    caching_test_list = caching_test(link)
-
-    nested_tables_list = nested_tables_test(link)
-
-    adstxt_list = adstxt_validation_test(link)
+    # parser = BuiltWithParser('rezka.ag')
+    # print(parser.get_page_records())
+    #
+    #
+    # link = "https://rozetka.com.ua/ua/search/?seller=rozetka&text=iPhone+14+Pro+Max"
+    #
+    # fast_check_list = fast_check_all(link)
+    #
+    # caching_test_list = caching_test(link)
+    #
+    # nested_tables_list = nested_tables_test(link)
+    #
+    # adstxt_list = adstxt_validation_test(link)
