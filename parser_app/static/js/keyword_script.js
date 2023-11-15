@@ -36,3 +36,19 @@ $(document).ready(function() {
         $("#text").attr("placeholder", "Enter text"); // Відновлюємо плейсхолдер
     });
 });
+
+
+var images = document.querySelectorAll('img');
+
+// Пройтися по кожному зображенню і виконати заміну
+images.forEach(function(image) {
+    // Отримати початковий src
+    var originalSrc = image.getAttribute('src');
+
+    // Перевірити, чи src містить 'output' та не містить '/static/'
+    if (originalSrc.includes('output') && !originalSrc.includes('/static/')) {
+        // Виконати заміну src, додаючи '/static', якщо він не вже має '/'
+        var newSrc = "/static/" + originalSrc + "?version=1.1";
+        image.setAttribute('src', newSrc);
+    }
+});

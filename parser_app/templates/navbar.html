@@ -21,6 +21,7 @@
             <a class="nav-a {% if request.resolver_match.url_name == 'responsive_page' %}active{% endif %}" href="{% url 'responsive_page' %}">Responsive</a>
             <a class="nav-a {% if request.resolver_match.url_name == 'builtwith' %}active{% endif %}" href="{% url 'builtwith' %}">Builtwith</a>
             <a class="nav-a {% if request.resolver_match.url_name == 'keyword' %}active{% endif %}" href="{% url 'keyword' %}">Keyword</a>
+            <a class="nav-a {% if request.resolver_match.url_name == 'get_text_pdf' %}active{% endif %}" href="{% url 'get_text_pdf' %}">Text in pdf</a>
         </nav>
 
         <div class="user-navbar">

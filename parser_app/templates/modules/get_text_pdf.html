@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+
+        <div class="div-search">
+            <form class="form-search" method="post" action="/get_text_pdf/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-container">
+                    <div class="button-group">
+                        <label for="file-upload" class="custom-file-upload">
+                            <input id="file-upload" type="file" accept=".pdf" name="file-upload" onchange="updateButtonText(this)">
+                            <span id="file-label">Upload File</span>
+                        </label>
+                        <button id="delete-file" type="button" class="button-search button-delete" style="display: none;" onclick="deleteFile()">Delete File</button>
+                        <button class="button-search" type="submit" onclick="showLoading()">Take text</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+        <div id="loading" style="display: none; padding: 100px; text-align: center">
+            <h2>Loading...</h2>
+        </div>
+
+        {% if pars == True %}
+
+            <div class="container-html">
+
+                {% include include_html %}
+
+            </div>
+
+        {% endif %}
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/keyword_script.js' %}"></script>
+</html>

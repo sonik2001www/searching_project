@@ -1,4 +1,11 @@
+import time
+import random
+
 from django.shortcuts import render, redirect
+
+import os
+import shutil
+from django.conf import settings
 
 from parser_app.modules.url import E_URL
 
@@ -23,6 +30,7 @@ from .tasks import (
     responsive_page_async,
     text_analiz_pars_async,
     keywords_pars_async,
+    get_text_pdf_async,
 )
 
 
@@ -389,3 +397,71 @@ def keyword(request):
             problem = True
 
     return render(request, 'keyword.html', locals())
+
+
+def get_text_pdf(request):
+    pars = False
+
+    if request.method == 'POST' and not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+
+    if request.method == "POST":
+        print(request.FILES)
+        uploaded_file = request.FILES.get('file-upload')
+        file_content = uploaded_file.read()
+        file_name = uploaded_file.name
+
+        random_str = str(random.randint(1, 10000))
+
+        include_html = f'modules/output{random_str}.html'
+
+        save_path = '/Users/applebuy/PycharmProjects/projects1/searching/searching_project/parser_app/templates/modules/output.pdf'
+        html_path = f'/Users/applebuy/PycharmProjects/projects1/searching/searching_project/parser_app/templates/modules/output{random_str}.html'
+
+        with open(save_path, 'wb') as destination:
+            destination.write(file_content)
+
+        async_result = get_text_pdf_async.delay(save_path, html_path)
+
+        pars = True
+
+        time.sleep(5)
+
+        copy_png_files_to_static()
+
+    return render(request, 'modules/get_text_pdf.html', locals())
+
+
+def copy_png_files_to_static():
+    # Шлях до папки 'static', куди ми копіюємо файли
+    destination_folder = os.path.join(settings.BASE_DIR, 'parser_app', 'static')
+
+    # Перевірка і видалення всіх файлів PNG в 'static'
+    for filename in os.listdir(destination_folder):
+        if filename.endswith('.png'):
+            file_path = os.path.join(destination_folder, filename)
+            os.remove(file_path)
+
+    # Шлях до папки 'modules', звідки ми копіюємо файли
+    source_folder = os.path.join(settings.BASE_DIR, 'parser_app', 'templates', 'modules')
+
+    # Перевірка і створення папки 'static', якщо вона не існує
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+
+    # Проходження по всіх файлах у вихідній папці
+    for filename in os.listdir(source_folder):
+        # Перевірка, чи файл є PNG
+        if filename.endswith('.png'):
+            # Створення повного шляху до вихідного файлу
+            source_file_path = os.path.join(source_folder, filename)
+
+            # Створення повного шляху до призначення файлу в 'static'
+            destination_file_path = os.path.join(destination_folder, filename)
+
+            # Копіювання файлу
+            shutil.copy(source_file_path, destination_file_path)
+
+            # Видалення вихідного файла
+            os.remove(source_file_path)
+

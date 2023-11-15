@@ -22,4 +22,5 @@ urlpatterns = [
     path('responsive_page/', responsive_page, name='responsive_page'),
     path('builtwith/', builtwith, name='builtwith'),
     path('keyword/', keyword, name='keyword'),
+    path('get_text_pdf/', get_text_pdf, name='get_text_pdf'),
 ]

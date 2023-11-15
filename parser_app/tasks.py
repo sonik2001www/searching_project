@@ -19,6 +19,7 @@ from parser_app.modules.whois import whois_pars
 from parser_app.modules.builtwith import builtwith_pars
 from parser_app.modules.text_analiz import text_analiz_pars
 from parser_app.modules.keywords import keywords_pars
+from parser_app.templates.modules.get_text_pdf import get_text_pdf_pars
 
 
 @shared_task
@@ -223,4 +224,12 @@ def responsive_page_async(request, E_URL):
     response.set_cookie("saved_url", url)
 
     return response
+
+
+@shared_task
+def get_text_pdf_async(file_path, file_output):
+    print("start parsing")
+    output = get_text_pdf_pars(file_path, file_output)
+    print("end parsing")
+    return output
 
